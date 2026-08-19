@@ -4,6 +4,7 @@ import type { Role, User } from "~/types/user";
 
 definePageMeta({
   layout: "default",
+  middleware: ["auth"],
 });
 
 const { orders, cancelled, pending, error, refreshOrders } = useOrders();
