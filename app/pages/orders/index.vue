@@ -2,6 +2,10 @@
 import { useOrders } from "~/composables/userOrders";
 import type { Role, User } from "~/types/user";
 
+definePageMeta({
+  layout: "default",
+});
+
 const { orders, cancelled, pending, error, refreshOrders } = useOrders();
 
 const search = ref("");
@@ -119,10 +123,12 @@ const updateUserName = (newName: string) => {
 
   <div v-else>
     <div v-for="order in orders" :key="order.id">
-      <p>Order Customer: {{ order.customer }}</p>
-      <p>Order Total: {{ order.total }}</p>
-      <p>Order Status: {{ order.status }}</p>
-      <hr />
+      <NuxtLink :to="`/orders/${order.id}`">
+        <p>Order Customer: {{ order.customer }}</p>
+        <p>Order Total: {{ order.total }}</p>
+        <p>Order Status: {{ order.status }}</p>
+        <hr />
+      </NuxtLink>
     </div>
   </div>
 
