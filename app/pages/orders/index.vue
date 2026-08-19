@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useOrders } from "~/composables/userOrders";
+import { useOrders } from "~/composables/useOrders";
 import type { Role, User } from "~/types/user";
 
 definePageMeta({
@@ -124,6 +124,7 @@ const updateUserName = (newName: string) => {
   <div v-else>
     <div v-for="order in orders" :key="order.id">
       <NuxtLink :to="`/orders/${order.id}`">
+        <p>Order id: {{ order.id }}</p>
         <p>Order Customer: {{ order.customer }}</p>
         <p>Order Total: {{ order.total }}</p>
         <p>Order Status: {{ order.status }}</p>

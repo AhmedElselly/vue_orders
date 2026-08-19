@@ -2,13 +2,13 @@ import type { Order } from "~/types/order";
 
 export let orders: Order[] = [
   {
-    id: 1,
+    id: "1",
     customer: "Ahmed",
     total: 500,
     status: "PENDING",
   },
   {
-    id: 2,
+    id: "2",
     customer: "John",
     total: 750,
     status: "COMPLETED",
