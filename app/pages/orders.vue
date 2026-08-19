@@ -57,7 +57,8 @@ const updateUserName = (newName: string) => {
 
   <div v-else>
     <div v-for="order in orders" :key="order.id">
-      <p>Order ID: {{ order.id }}</p>
+      <p>Order Customer: {{ order.customer }}</p>
+      <p>Order Total: {{ order.total }}</p>
       <p>Order Status: {{ order.status }}</p>
       <hr />
     </div>
