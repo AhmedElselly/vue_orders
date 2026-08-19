@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuth } from "~/composables/useAuth";
-const { user, login } = useAuth();
+const { isAuth, login } = useAuth();
 
 const router = useRouter();
 
