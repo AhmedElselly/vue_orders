@@ -33,6 +33,8 @@ const handleLogout = async () => {
           <br />
           <NuxtLink to="/customers">Customers</NuxtLink>
           <br />
+          <NuxtLink to="/admin">Admin</NuxtLink>
+          <br />
           <button v-if="isAuth" @click="handleLogout">Logout</button>
         </nav>
       </aside>
