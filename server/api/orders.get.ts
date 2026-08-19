@@ -1,6 +1,8 @@
+import type { Order } from "~/types/order";
+
 export default defineEventHandler(async (event) => {
   // Simulate fetching orders from a database or external API
-  const orders = [
+  const orders: Order[] | null = [
     {
       id: "1",
       customer: "John Doe",
@@ -14,5 +16,5 @@ export default defineEventHandler(async (event) => {
       status: "COMPLETED",
     },
   ];
-  return orders;
+  return orders ? orders : null;
 });

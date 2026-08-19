@@ -1,4 +1,4 @@
-import type { Order } from "~/types/user";
+import type { Order } from "~/types/order";
 
 export function useOrders() {
   //   const orders = ref(0);
@@ -7,7 +7,7 @@ export function useOrders() {
     data: orders,
     error,
     pending,
-  } = useFetch<Order[]>("/api/orders", {
+  } = useFetch<Order[] | null>("/api/orders", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
