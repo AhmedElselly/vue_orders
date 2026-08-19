@@ -2,7 +2,7 @@
 import { useOrders } from "~/composables/userOrders";
 import type { Role, User } from "~/types/user";
 
-const { orders, cancelled, pending, error } = useOrders();
+const { orders, cancelled, pending, error, refreshOrders } = useOrders();
 
 const search = ref("");
 
@@ -11,11 +11,40 @@ const user = reactive<User>({
   role: "MANAGER",
 });
 
+const newOrder = reactive({
+  customer: "",
+  total: 0,
+  status: "PENDING" as OrderStatus,
+});
+
+const creating = ref(false);
+
 const decreaseCancelled = () => {
   if (cancelled.value > 0) {
     cancelled.value--;
   }
 };
+
+async function createOrder() {
+  creating.value = true;
+
+  try {
+    const response = await $fetch("/api/orders", {
+      method: "POST",
+      body: newOrder,
+    });
+
+    console.log("Order created successfully:", response);
+
+    newOrder.customer = "";
+    newOrder.total = 0;
+    await refreshOrders(); // Refresh the orders list after creating a new order
+  } catch (err) {
+    console.error("Error creating order:", err);
+  } finally {
+    creating.value = false;
+  }
+}
 
 watch(orders, (newValue, oldValue) => {
   console.log(`Orders changed from ${oldValue} to ${newValue}`);
@@ -47,6 +76,35 @@ const updateUserName = (newName: string) => {
 
 <template>
   <h1>Orders page</h1>
+
+  <!-- Order Creation Form -->
+
+  <form @submit.prevent="createOrder" style="margin-bottom: 20px">
+    <div>
+      <label for="customer">Customer:</label>
+      <input type="text" id="customer" v-model="newOrder.customer" required />
+    </div>
+    <div>
+      <label for="total">Total:</label>
+      <input
+        type="number"
+        id="total"
+        v-model.number="newOrder.total"
+        required
+      />
+    </div>
+    <div>
+      <label for="status">Status:</label>
+      <select id="status" v-model="newOrder.status" required>
+        <option value="PENDING">PENDING</option>
+        <option value="COMPLETED">COMPLETED</option>
+        <option value="CANCELLED">CANCELLED</option>
+      </select>
+    </div>
+    <button type="submit" :disabled="creating">
+      {{ creating ? "Creating..." : "Create Order" }}
+    </button>
+  </form>
 
   <div v-if="pending">
     <p>Loading...</p>

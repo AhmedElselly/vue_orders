@@ -1,12 +1,11 @@
 import type { Order } from "~/types/order";
 
 export function useOrders() {
-  //   const orders = ref(0);
-
   const {
     data: orders,
     error,
     pending,
+    refresh: refreshOrders,
   } = useFetch<Order[] | null>("/api/orders", {
     method: "GET",
     headers: {
@@ -21,5 +20,6 @@ export function useOrders() {
     pending,
     error,
     cancelled,
+    refreshOrders,
   };
 }
