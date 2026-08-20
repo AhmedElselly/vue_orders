@@ -4,19 +4,18 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   console.log("Received order data:", body);
 
-  const order = {
-    id: Date.now().toString(),
-    total: body.total,
-    status: body.status,
-    customer: body.customer,
-  };
+  const config = useRuntimeConfig();
 
-  //   orders.push(order); // Add the new order to the in-memory orders array
-  addOrder(order); // Add the new order to the beginning of the in-memory orders array
+  const response = await $fetch(`${config.backendUrl}/orders`, {
+    method: "POST",
+    body,
+  });
+
+  console.log("Response from backend:", response);
 
   return {
     success: true,
     message: "Order received successfully",
-    order,
+    order: response,
   };
 });

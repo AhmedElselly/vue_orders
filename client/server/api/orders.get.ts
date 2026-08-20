@@ -1,7 +1,8 @@
 import type { Order } from "~/types/order";
-import { orders } from "~/data/orders";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+
   // Simulate fetching orders from a database or external API
-  return orders;
+  return $fetch<Order[] | null>(`${config.backendUrl}/orders`);
 });
